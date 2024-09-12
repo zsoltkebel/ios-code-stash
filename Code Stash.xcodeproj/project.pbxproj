@@ -7,20 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF4A150D2C91A5B600FD9456 /* Code_CloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A150C2C91A5B600FD9456 /* Code_CloneApp.swift */; };
+		AF4A150D2C91A5B600FD9456 /* Code_StashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A150C2C91A5B600FD9456 /* Code_StashApp.swift */; };
 		AF4A150F2C91A5B600FD9456 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A150E2C91A5B600FD9456 /* ContentView.swift */; };
 		AF4A15112C91A5B600FD9456 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15102C91A5B600FD9456 /* Item.swift */; };
 		AF4A15132C91A5B800FD9456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF4A15122C91A5B800FD9456 /* Assets.xcassets */; };
 		AF4A15162C91A5B800FD9456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF4A15152C91A5B800FD9456 /* Preview Assets.xcassets */; };
+		AF4A151F2C91A77600FD9456 /* BarcodeListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */; };
+		AF4A15212C91A86D00FD9456 /* BarcodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15202C91A86D00FD9456 /* BarcodeGenerator.swift */; };
+		AF4A15232C91A8C000FD9456 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15222C91A8C000FD9456 /* BarcodeView.swift */; };
+		AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */; };
+		AF4A15272C91EDFB00FD9456 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15262C91EDFB00FD9456 /* ScannerView.swift */; };
+		AF4A15292C91EE8100FD9456 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15282C91EE8100FD9456 /* AppViewModel.swift */; };
+		AF4A152B2C91EEBE00FD9456 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A152A2C91EEBE00FD9456 /* SwiftUIView.swift */; };
+		AF4A152D2C9220F700FD9456 /* NameBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A152C2C9220F700FD9456 /* NameBarcodeView.swift */; };
+		AF4A152F2C92DDF200FD9456 /* AddBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AF4A15092C91A5B600FD9456 /* Code Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF4A150C2C91A5B600FD9456 /* Code_CloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code_CloneApp.swift; sourceTree = "<group>"; };
+		AF4A15092C91A5B600FD9456 /* Code Stash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Stash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF4A150C2C91A5B600FD9456 /* Code_StashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code_StashApp.swift; sourceTree = "<group>"; };
 		AF4A150E2C91A5B600FD9456 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AF4A15102C91A5B600FD9456 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AF4A15122C91A5B800FD9456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF4A15152C91A5B800FD9456 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeListItem.swift; sourceTree = "<group>"; };
+		AF4A15202C91A86D00FD9456 /* BarcodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeGenerator.swift; sourceTree = "<group>"; };
+		AF4A15222C91A8C000FD9456 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
+		AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBarcodeView.swift; sourceTree = "<group>"; };
+		AF4A15262C91EDFB00FD9456 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		AF4A15282C91EE8100FD9456 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		AF4A152A2C91EEBE00FD9456 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		AF4A152C2C9220F700FD9456 /* NameBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameBarcodeView.swift; sourceTree = "<group>"; };
+		AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBarcodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +55,7 @@
 		AF4A15002C91A5B600FD9456 = {
 			isa = PBXGroup;
 			children = (
-				AF4A150B2C91A5B600FD9456 /* Code Clone */,
+				AF4A150B2C91A5B600FD9456 /* Code Stash */,
 				AF4A150A2C91A5B600FD9456 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,21 +63,30 @@
 		AF4A150A2C91A5B600FD9456 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AF4A15092C91A5B600FD9456 /* Code Clone.app */,
+				AF4A15092C91A5B600FD9456 /* Code Stash.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AF4A150B2C91A5B600FD9456 /* Code Clone */ = {
+		AF4A150B2C91A5B600FD9456 /* Code Stash */ = {
 			isa = PBXGroup;
 			children = (
-				AF4A150C2C91A5B600FD9456 /* Code_CloneApp.swift */,
+				AF4A150C2C91A5B600FD9456 /* Code_StashApp.swift */,
 				AF4A150E2C91A5B600FD9456 /* ContentView.swift */,
 				AF4A15102C91A5B600FD9456 /* Item.swift */,
 				AF4A15122C91A5B800FD9456 /* Assets.xcassets */,
 				AF4A15142C91A5B800FD9456 /* Preview Content */,
+				AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */,
+				AF4A15222C91A8C000FD9456 /* BarcodeView.swift */,
+				AF4A15202C91A86D00FD9456 /* BarcodeGenerator.swift */,
+				AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */,
+				AF4A15262C91EDFB00FD9456 /* ScannerView.swift */,
+				AF4A152C2C9220F700FD9456 /* NameBarcodeView.swift */,
+				AF4A15282C91EE8100FD9456 /* AppViewModel.swift */,
+				AF4A152A2C91EEBE00FD9456 /* SwiftUIView.swift */,
+				AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */,
 			);
-			path = "Code Clone";
+			path = "Code Stash";
 			sourceTree = "<group>";
 		};
 		AF4A15142C91A5B800FD9456 /* Preview Content */ = {
@@ -73,9 +100,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AF4A15082C91A5B600FD9456 /* Code Clone */ = {
+		AF4A15082C91A5B600FD9456 /* Code Stash */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AF4A15192C91A5B800FD9456 /* Build configuration list for PBXNativeTarget "Code Clone" */;
+			buildConfigurationList = AF4A15192C91A5B800FD9456 /* Build configuration list for PBXNativeTarget "Code Stash" */;
 			buildPhases = (
 				AF4A15052C91A5B600FD9456 /* Sources */,
 				AF4A15062C91A5B600FD9456 /* Frameworks */,
@@ -85,9 +112,9 @@
 			);
 			dependencies = (
 			);
-			name = "Code Clone";
+			name = "Code Stash";
 			productName = "Code Clone";
-			productReference = AF4A15092C91A5B600FD9456 /* Code Clone.app */;
+			productReference = AF4A15092C91A5B600FD9456 /* Code Stash.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +132,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AF4A15042C91A5B600FD9456 /* Build configuration list for PBXProject "Code Clone" */;
+			buildConfigurationList = AF4A15042C91A5B600FD9456 /* Build configuration list for PBXProject "Code Stash" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -118,7 +145,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AF4A15082C91A5B600FD9456 /* Code Clone */,
+				AF4A15082C91A5B600FD9456 /* Code Stash */,
 			);
 		};
 /* End PBXProject section */
@@ -141,8 +168,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF4A150F2C91A5B600FD9456 /* ContentView.swift in Sources */,
+				AF4A15272C91EDFB00FD9456 /* ScannerView.swift in Sources */,
+				AF4A15292C91EE8100FD9456 /* AppViewModel.swift in Sources */,
+				AF4A15212C91A86D00FD9456 /* BarcodeGenerator.swift in Sources */,
+				AF4A152B2C91EEBE00FD9456 /* SwiftUIView.swift in Sources */,
 				AF4A15112C91A5B600FD9456 /* Item.swift in Sources */,
-				AF4A150D2C91A5B600FD9456 /* Code_CloneApp.swift in Sources */,
+				AF4A150D2C91A5B600FD9456 /* Code_StashApp.swift in Sources */,
+				AF4A152D2C9220F700FD9456 /* NameBarcodeView.swift in Sources */,
+				AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */,
+				AF4A151F2C91A77600FD9456 /* BarcodeListItem.swift in Sources */,
+				AF4A15232C91A8C000FD9456 /* BarcodeView.swift in Sources */,
+				AF4A152F2C92DDF200FD9456 /* AddBarcodeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,10 +311,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Code Clone/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Code Stash/Preview Content\"";
 				DEVELOPMENT_TEAM = BGYHUAQL5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,10 +341,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Code Clone/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Code Stash/Preview Content\"";
 				DEVELOPMENT_TEAM = BGYHUAQL5U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcodes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -329,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AF4A15042C91A5B600FD9456 /* Build configuration list for PBXProject "Code Clone" */ = {
+		AF4A15042C91A5B600FD9456 /* Build configuration list for PBXProject "Code Stash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AF4A15172C91A5B800FD9456 /* Debug */,
@@ -338,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AF4A15192C91A5B800FD9456 /* Build configuration list for PBXNativeTarget "Code Clone" */ = {
+		AF4A15192C91A5B800FD9456 /* Build configuration list for PBXNativeTarget "Code Stash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AF4A151A2C91A5B800FD9456 /* Debug */,

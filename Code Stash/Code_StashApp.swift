@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct Code_CloneApp: App {
+struct Code_StashApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -22,10 +22,17 @@ struct Code_CloneApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @StateObject private var vm = AppViewModel()
+
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(vm)
+                .task {
+                    await vm.requestDataScannerAccessStatus()
+                }
         }
         .modelContainer(sharedModelContainer)
     }
