@@ -10,12 +10,17 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    
     @Query(sort: \Item.timestamp, order: .reverse) private var items: [Item]
     
     @State private var scanning = false
     @State private var enteringCodeDetails = false
     @State private var searchText = ""
     @State private var newItem = Item()
+    @State private var favoritesExpanded = true
+    @State private var historyExpanded = true
+    
+    @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
     
     var body: some View {
         NavigationSplitView {
@@ -24,19 +29,11 @@ struct ContentView: View {
             
             List {
                 Section {
-                    ForEach(searchResults) { item in
-                        NavigationLink {
-                            EditBarcodeView(code: item)
-                            BarcodeView(barcode: item)
-                        } label: {
-                            BarcodeListItem(barcode: item)
-                        }
-                    }
-                    .onDelete(perform: deleteItems)
-                } header: {
+                    EmptyView()
+                } footer: {
                     LazyVGrid(columns: columnGrid, spacing: 16, content: {
                         
-
+                        
                         CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
                         
                         
@@ -47,21 +44,20 @@ struct ContentView: View {
                     .padding(.vertical)
                 }
                 
-                Section {
-                    
-                    
-                }
+                BarcodeSearchResults(searchText: $searchText)
                 
             }
             .navigationTitle("Codes")
             .overlay {
                 if items.isEmpty {
-                    ContentUnavailableView("No Barcodes", systemImage: "tray", description: Text("Start by adding some items."))
+                    ContentUnavailableView("No Codes Yet", systemImage: "qrcode", description: Text("Start by scanning a code or entering code details manually."))
                 }
             }
             .toolbar {
-                ToolbarItem {
-                    EditButton()
+                if !items.isEmpty {
+                    ToolbarItem {
+                        EditButton()
+                    }
                 }
             }
             
@@ -70,7 +66,7 @@ struct ContentView: View {
             Text("Select an item")
         }
         .sheet(isPresented: $scanning, content: {
-            SwiftUIView()
+            BarcodeViewfinderView()
                 .toolbarRole(.editor)
         })
         .sheet(isPresented: $enteringCodeDetails) {
@@ -86,7 +82,6 @@ struct ContentView: View {
             }
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
-        
     }
     
     var searchResults: [Item] {
@@ -103,15 +98,8 @@ struct ContentView: View {
     
     private func addItem() {
         newItem = Item()
+        newItem.symbologyRawValue = default_symbology
         enteringCodeDetails = true
-    }
-    
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
     }
 }
 
@@ -121,7 +109,7 @@ struct ContentView: View {
 }
 
 struct CustomButton: View {
-    var title: String
+    var title: LocalizedStringKey
     var systemName: String
     var action: () -> Void
     

@@ -9,41 +9,50 @@ import SwiftUI
 import Vision
 
 struct AddBarcodeView: View {
+    
+    enum FocusedField {
+        case name, payload
+    }
+    
     @Bindable var item: Item = Item()
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
+    @FocusState private var focusedField: FocusedField?
+
     var body: some View {
         Form {
             TextField("Name", text: $item.name)
+                .focused($focusedField, equals: .name)
+
+            CodeTypeAndContentInputSection(item: item, sectionExpanded: true)
             
-            Section("Payload & Presentation") {
-                TextField("Code Payload", text: $item.payloadStringValue, axis: .vertical)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(5, reservesSpace: false)
-                Picker("Symbology", selection: $item.symbologyRawValue) {
-                    ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
-                        Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
-                    }
-                }
-            }
             BarcodeView(barcode: item)
+                .frame(maxWidth: .infinity)
         }
-        .navigationTitle(item.name)
+        .navigationTitle("Add Code")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Add", action: addItem)
             }
         })
+        .onAppear {
+            focusedField = .name
+        }
     }
     
     private func addItem() {
+        item.barcodeImageData = nil // to make sure written in palyload is loaded (can save item without submitting textfield)
         withAnimation {
             modelContext.insert(item)
         }
         dismiss()
+    }
+    
+    private func clearImageData() {
+        item.barcodeImageData = nil
     }
 }
 

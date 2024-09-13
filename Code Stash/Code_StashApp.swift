@@ -30,9 +30,6 @@ struct Code_StashApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(vm)
-                .task {
-                    await vm.requestDataScannerAccessStatus()
-                }
         }
         .modelContainer(sharedModelContainer)
     }

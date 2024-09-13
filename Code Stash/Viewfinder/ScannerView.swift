@@ -14,7 +14,7 @@ struct ScannerView: UIViewControllerRepresentable {
     @Binding var recognizedItems: [RecognizedItem]
     let recognizedDataType: DataScannerViewController.RecognizedDataType
     let recognizesMultipleItems: Bool
-    let onRecognizedItems: ([RecognizedItem]) -> Void
+    let onRecognizedFirstItem: (RecognizedItem) -> Void
     
     func makeUIViewController(context: Context) -> DataScannerViewController {
         let vc = DataScannerViewController(
@@ -38,7 +38,7 @@ struct ScannerView: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(recognizedItems: $recognizedItems, onRecognizedItems: onRecognizedItems)
+        Coordinator(recognizedItems: $recognizedItems, onRecognizedFirstItem: onRecognizedFirstItem)
     }
     
     static func dismantleUIViewController(_ uiViewController: DataScannerViewController, coordinator: Coordinator) {
@@ -49,11 +49,11 @@ struct ScannerView: UIViewControllerRepresentable {
     class Coordinator: NSObject, DataScannerViewControllerDelegate {
         
         @Binding var recognizedItems: [RecognizedItem]
-        let onRecognizedItems: (([RecognizedItem]) -> Void)?
+        let onRecognizedFirstItem: ((RecognizedItem) -> Void)?
 
-        init(recognizedItems: Binding<[RecognizedItem]>, onRecognizedItems: (([RecognizedItem]) -> Void)? = nil) {
+        init(recognizedItems: Binding<[RecognizedItem]>, onRecognizedFirstItem: ((RecognizedItem) -> Void)? = nil) {
             self._recognizedItems = recognizedItems
-            self.onRecognizedItems = onRecognizedItems
+            self.onRecognizedFirstItem = onRecognizedFirstItem
         }
         
         func dataScanner(_ dataScanner: DataScannerViewController, didTapOn item: RecognizedItem) {
@@ -62,9 +62,12 @@ struct ScannerView: UIViewControllerRepresentable {
         
         func dataScanner(_ dataScanner: DataScannerViewController, didAdd addedItems: [RecognizedItem], allItems: [RecognizedItem]) {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
+            if recognizedItems.isEmpty,
+               let firstItem = recognizedItems.first {
+                self.onRecognizedFirstItem?(firstItem)
+            }
             recognizedItems.append(contentsOf: addedItems)
             print("didAddItems \(addedItems)")
-            self.onRecognizedItems?(addedItems)
         }
         
         func dataScanner(_ dataScanner: DataScannerViewController, didRemove removedItems: [RecognizedItem], allItems: [RecognizedItem]) {

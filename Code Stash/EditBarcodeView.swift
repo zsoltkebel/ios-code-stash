@@ -8,32 +8,94 @@
 import SwiftUI
 import Vision
 
-
 struct EditBarcodeView: View {
-    @Bindable var code: Item
+    @Bindable var item: Item
+    
+    @State var sectionExpanded: Bool = false
+    @State private var previousBrightness: Double?
+    @State private var showingDeleteConfirmAlert = false
+    
+    @Environment(\.modelContext) var modelContext
+    @Environment(\.dismiss) var dismiss
+    
+    @AppStorage("auto_increase_brightness") var auto_increase_brigthness = false
+    @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
     
     var body: some View {
-        Form {
+        let screen = UIScreen.main
+        List {
+            BarcodeView(barcode: item)
+                .frame(maxWidth: .infinity)
             //            TextField("Name", text: $code.name)
-            Section("Payload & Presentation") {
-                TextField("Code Payload", text: $code.payloadStringValue, axis: .vertical)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(5, reservesSpace: false)
-                Picker("Symbology", selection: $code.symbologyRawValue) {
-                    ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
-                        Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
+            CodeTypeAndContentInputSection(item: item)
+        }
+        .listStyle(.sidebar)
+        .navigationTitle($item.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: auto_increase_brigthness, { oldValue, newValue in
+            if newValue {
+                previousBrightness = screen.brightness
+                screen.brightness = 1.0
+            } else {
+                if let brightness = previousBrightness {
+                    screen.brightness = brightness
+                }
+            }
+        })
+        .onAppear(perform: {
+            if auto_increase_brigthness {
+                previousBrightness = screen.brightness
+                screen.brightness = 1.0
+            }
+        })
+        .onDisappear(perform: {
+            if auto_increase_brigthness,
+               let brightness = previousBrightness {
+                screen.brightness = brightness
+            }
+        })
+        .toolbar {
+            //            UserDefaultSettings()
+            ToolbarItem {
+                Button(action: { item.favorite.toggle() },
+                       label: {
+                    Image(systemName: item.favorite ? "star.fill" : "star")
+                })
+            }
+            
+            ToolbarItem {
+                Menu("More", systemImage: "ellipsis.circle") {
+                    Toggle("Auto Increase Brightness", systemImage: auto_increase_brigthness ? "sun.max.fill" : "sun.min", isOn: $auto_increase_brigthness)
+                    
+                    Section {
+                        Button("Delete", systemImage: "trash", role: .destructive) {
+                            showingDeleteConfirmAlert = true
+                        }
                     }
                 }
             }
         }
-        .navigationTitle($code.name)
-        .navigationBarTitleDisplayMode(.inline)
+        // Delete confirmation alert
+        .alert("Delete \"\(item.name)\"?", isPresented: $showingDeleteConfirmAlert) {
+            Button("No", role: .cancel) {}
+            Button("Yes", action: deleteBarcode)
+        }
+    }
+    
+    private func clearImageData() {
+        print("Clear image data")
+        item.barcodeImageData = nil
+    }
+    
+    private func deleteBarcode() {
+        modelContext.delete(item)
+        dismiss()
     }
 }
 
 #Preview {
     NavigationStack {
-        EditBarcodeView(code: .QR())
+        EditBarcodeView(item: .QR())
             .modelContainer(for: Item.self, inMemory: true)
     }
 }
@@ -88,5 +150,57 @@ extension String {
             }
         }
         return sentence
+    }
+}
+
+struct UserDefaultSettings: View {
+    
+    @AppStorage("auto_increase_brightness") var auto_increase_brigthness = false
+    @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
+    
+    var body: some View {
+        Menu("More", systemImage: "ellipsis.circle") {
+            Picker(selection: $default_symbology) {
+                ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
+                    Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
+                }
+            } label: {
+                Button(action: {}, label: {
+                    Text("Default Code Type")
+                    Text(default_symbology.replacing("VNBarcodeSymbology", with: "").toSentence())
+                    Image(systemName: "chevron.up.chevron.down")
+                })
+            }
+            .pickerStyle(.menu)
+            
+            Toggle("Auto Increase Brightness", systemImage: auto_increase_brigthness ? "sun.max.fill" : "sun.min", isOn: $auto_increase_brigthness)
+        }
+    }
+}
+
+struct CodeTypeAndContentInputSection: View {
+    @Bindable var item: Item
+    
+    @State var sectionExpanded = false
+    
+    var body: some View {
+        Section("Code Type & Content", isExpanded: $sectionExpanded) {
+            Picker("Type", selection: $item.symbologyRawValue) {
+                ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
+                    Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
+                }
+            }
+            .onChange(of: item.symbologyRawValue) { oldValue, newValue in
+                clearImageData()
+            }
+            
+            TextField("Content", text: $item.payloadStringValue)
+                .onSubmit(clearImageData)
+        }
+    }
+    
+    private func clearImageData() {
+        print("Clear image data")
+        item.barcodeImageData = nil
     }
 }
