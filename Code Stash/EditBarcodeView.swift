@@ -24,9 +24,10 @@ struct EditBarcodeView: View {
     var body: some View {
         let screen = UIScreen.main
         List {
-            BarcodeView(barcode: item)
+            BarcodeImage(item: item)
                 .frame(maxWidth: .infinity)
-            //            TextField("Name", text: $code.name)
+                .listRowBackground(Color.white)
+            
             CodeTypeAndContentInputSection(item: item)
         }
         .listStyle(.sidebar)
@@ -66,6 +67,11 @@ struct EditBarcodeView: View {
             ToolbarItem {
                 Menu("More", systemImage: "ellipsis.circle") {
                     Toggle("Auto Increase Brightness", systemImage: auto_increase_brigthness ? "sun.max.fill" : "sun.min", isOn: $auto_increase_brigthness)
+                    
+                    Button("Reload Image", systemImage: "icloud.and.arrow.down") {
+                        item.barcodeImageData = nil
+                    }
+                    .disabled(item.barcodeImageData == nil)
                     
                     Section {
                         Button("Delete", systemImage: "trash", role: .destructive) {

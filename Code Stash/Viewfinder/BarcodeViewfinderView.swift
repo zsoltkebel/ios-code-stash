@@ -15,7 +15,9 @@ struct BarcodeViewfinderView: View {
     
     @EnvironmentObject var vm: AppViewModel
     
+    @State var recognizedItems: [RecognizedItem] = []
     @State var showSheet = false
+    @State var isFirstItem = true
     
     private let textContentTypes: [(title: String, textContentType: DataScannerViewController.TextContentType?)] = [
         ("All", .none),
@@ -67,46 +69,63 @@ struct BarcodeViewfinderView: View {
             recognizedItems: $vm.recognizedItems,
             recognizedDataType: vm.recognizedDataType,
             recognizesMultipleItems: vm.recognizesMultipleItems,
-            onRecognizedFirstItem: { recognizedItem in
-                print("recognised an item")
-                    switch recognizedItem {
-                    case .text(let text):
-                        fatalError("This should not be recognised")
-                    case .barcode(let barcode):
-                        withAnimation {
-                            let newItem = Item(payloadStringValue: barcode.payloadStringValue ?? "", symbologyRawValue: barcode.observation.symbology.rawValue)
-                            modelContext.insert(newItem)
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                dismiss()
-                            }
-                        }
-                    }
-            }
+            onRecognizedItems: onRecognizedItems
         )
         .background { Color.gray.opacity(0.3) }
         .ignoresSafeArea()
         .id(vm.dataScannerViewId)
-        //        .sheet(isPresented: .constant(true)) {
-        //            bottomContainerView
-        //                .background(.ultraThinMaterial)
-        //                .presentationDetents([.medium, .fraction(0.25)])
-        //                .presentationDragIndicator(.visible)
-        //                .interactiveDismissDisabled()
-        //                .onAppear {
-        //                    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-        //                          let controller = windowScene.windows.first?.rootViewController?.presentedViewController else {
-        //                        return
-        //                    }
-        //                    controller.view.backgroundColor = .clear
-        //                }
-        //        }
+//                .sheet(isPresented: .constant(true)) {
+//                    bottomContainerView
+//                        .background(.ultraThinMaterial)
+//                        .presentationDetents([.medium, .fraction(0.25)])
+//                        .presentationDragIndicator(.visible)
+//                        .interactiveDismissDisabled()
+//                        .onAppear {
+//                            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//                                  let controller = windowScene.windows.first?.rootViewController?.presentedViewController else {
+//                                return
+//                            }
+//                            controller.view.backgroundColor = .clear
+//                        }
+//                }
         .onChange(of: vm.scanType) { _ in vm.recognizedItems = [] }
         .onChange(of: vm.textContentType) { _ in vm.recognizedItems = [] }
         .onChange(of: vm.recognizesMultipleItems) { _ in vm.recognizedItems = []}
         .sheet(isPresented: $showSheet) {
             EditBarcodeView(item: .Barcode())
         }
+        .onAppear(perform: {
+            // reset recognized items
+//            vm.recognizedItems = []
+            isFirstItem = true
+        })
+    }
+    
+    private func onRecognizedItems(recognizedItems: [RecognizedItem]) {
+        guard isFirstItem,
+              let firstRecognizedItem = recognizedItems.first else {
+            return
+        }
+        
+        isFirstItem = false
+        
+        switch firstRecognizedItem {
+        case .text(_):
+            fatalError("This should not be recognised")
+        case .barcode(let barcode):
+            withAnimation {
+                let newItem = Item(payloadStringValue: barcode.payloadStringValue ?? "", symbologyRawValue: barcode.observation.symbology.rawValue)
+                modelContext.insert(newItem)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    dismiss()
+                }
+            }
+        @unknown default:
+            fatalError()
+        }
+                
+        
     }
     
     private var headerView: some View {

@@ -199,6 +199,9 @@
         }
       }
     },
+    "Copy Content" : {
+
+    },
     "Default Code Type" : {
       "localizations" : {
         "en-GB" : {
@@ -419,6 +422,9 @@
           }
         }
       }
+    },
+    "Reload Image" : {
+
     },
     "Requesting camera access" : {
       "localizations" : {

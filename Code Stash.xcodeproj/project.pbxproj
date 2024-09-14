@@ -17,7 +17,6 @@
 		AF4A15162C91A5B800FD9456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF4A15152C91A5B800FD9456 /* Preview Assets.xcassets */; };
 		AF4A151F2C91A77600FD9456 /* BarcodeListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */; };
 		AF4A15212C91A86D00FD9456 /* BarcodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15202C91A86D00FD9456 /* BarcodeGenerator.swift */; };
-		AF4A15232C91A8C000FD9456 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15222C91A8C000FD9456 /* BarcodeView.swift */; };
 		AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */; };
 		AF4A15272C91EDFB00FD9456 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15262C91EDFB00FD9456 /* ScannerView.swift */; };
 		AF4A15292C91EE8100FD9456 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15282C91EE8100FD9456 /* AppViewModel.swift */; };
@@ -39,7 +38,6 @@
 		AF4A15152C91A5B800FD9456 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeListItem.swift; sourceTree = "<group>"; };
 		AF4A15202C91A86D00FD9456 /* BarcodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeGenerator.swift; sourceTree = "<group>"; };
-		AF4A15222C91A8C000FD9456 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBarcodeView.swift; sourceTree = "<group>"; };
 		AF4A15262C91EDFB00FD9456 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		AF4A15282C91EE8100FD9456 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -76,6 +74,7 @@
 				AF015F282C948AF40056AC68 /* BarcodeSearchResults.swift */,
 				AF015F2A2C948E660056AC68 /* BarcodeList.swift */,
 				AF4A151E2C91A77600FD9456 /* BarcodeListItem.swift */,
+				AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */,
 			);
 			path = Barcode;
 			sourceTree = "<group>";
@@ -107,8 +106,6 @@
 				AF4A15142C91A5B800FD9456 /* Preview Content */,
 				AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */,
 				AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */,
-				AF4A15222C91A8C000FD9456 /* BarcodeView.swift */,
-				AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */,
 				AF015F272C948AD40056AC68 /* Barcode */,
 				AFA6D6472C936EB400BA5B22 /* Barcode Generation */,
 				AF015F262C948A0C0056AC68 /* Viewfinder */,
@@ -217,7 +214,6 @@
 				AF015F2B2C948E660056AC68 /* BarcodeList.swift in Sources */,
 				AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */,
 				AF4A151F2C91A77600FD9456 /* BarcodeListItem.swift in Sources */,
-				AF4A15232C91A8C000FD9456 /* BarcodeView.swift in Sources */,
 				AF4A152F2C92DDF200FD9456 /* AddBarcodeView.swift in Sources */,
 				AFA6D6462C934F6100BA5B22 /* BarcodeImage.swift in Sources */,
 				AF4A15312C931E1D00FD9456 /* BarcodeAPI.swift in Sources */,

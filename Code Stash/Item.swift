@@ -55,7 +55,7 @@ final class Item {
     
     static func StudentID() -> Item {
         let item = Item()
-        item.symbologyRawValue = VNBarcodeSymbology.codabar.rawValue
+        item.symbologyRawValue = VNBarcodeSymbology.code39.rawValue
         item.payloadStringValue = "13587936"
         return item
     }

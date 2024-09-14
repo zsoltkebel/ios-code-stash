@@ -28,7 +28,7 @@ struct AddBarcodeView: View {
 
             CodeTypeAndContentInputSection(item: item, sectionExpanded: true)
             
-            BarcodeView(barcode: item)
+            BarcodeImage(item: item)
                 .frame(maxWidth: .infinity)
         }
         .navigationTitle("Add Code")

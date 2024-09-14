@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 import Vision
 
 struct BarcodeImage: View {
@@ -17,7 +18,7 @@ struct BarcodeImage: View {
     var body: some View {
         let symbology = VNBarcodeSymbology(rawValue: item.symbologyRawValue)
         
-        Group {
+        HStack {
             if let imageData = item.barcodeImageData,
                let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
@@ -26,24 +27,40 @@ struct BarcodeImage: View {
                     .frame(maxWidth: squareCodes.contains(symbology) ? 220 : 400, minHeight: 120)
                     .background(.white)
             } else if let image = generator.generate(item.payloadStringValue, symbology) {
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: squareCodes.contains(symbology) ? 220 : 400, minHeight: 120)
-                    .background(.white)
+                VStack {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: squareCodes.contains(symbology) ? 220 : 400, minHeight: 120)
+                        .background(.white)
+                    Text(item.payloadStringValue)
+                }
             } else if BarcodeAPI.supports(symbology: symbology) {
                 ProgressView()
                     .task {
-                        item.barcodeImageData = await BarcodeAPI.loadBarcode(item.payloadStringValue, symbology: symbology.toBarcodeAPISymbology()!)
+                        item.barcodeImageData = await BarcodeAPI.load(barcode: item)
                     }
                     .frame(maxWidth: squareCodes.contains(symbology) ? 220 : 400, minHeight: 120)
             } else {
                 ContentUnavailableView("Cannot display this code", systemImage: "exclamationmark.triangle.fill")
             }
         }
+        .padding(8)
+        .background {
+            Color.white
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .contextMenu(menuItems: {
+            Button("Copy Content", systemImage: "doc.on.doc") {
+                UIPasteboard.general.setValue(item.payloadStringValue, forPasteboardType: UTType.plainText.identifier)
+            }
+        })
     }
 }
 
 #Preview {
-    BarcodeImage(item: .StudentID())
+    ZStack {
+        Color.blue
+        BarcodeImage(item: .QR())
+    }
 }

@@ -24,28 +24,27 @@ struct ContentView: View {
     
     var body: some View {
         NavigationSplitView {
-            let columnGrid: [GridItem] =
-            Array(repeating: .init(.flexible(), spacing: 16), count: 2)
-            
             List {
-                Section {
-                    EmptyView()
-                } footer: {
-                    LazyVGrid(columns: columnGrid, spacing: 16, content: {
-                        
-                        
-                        CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
-                        
-                        
-                        CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
-                        
-                    })
-                    .listRowInsets(.init())
-                    .padding(.vertical)
+                LazyVGrid(columns: [.init(.adaptive(minimum: 140))]) {
+                    CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
+                    
+                    CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
                 }
+                .listRowInsets(.init())
+                .listRowBackground(Color.clear)
+                
+                //                Section {
+                //                    EmptyView()
+                //                } footer: {
+                //                    LazyVGrid(columns: columnGrid, spacing: 16, content: {
+                //                        CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
+                //
+                //                        CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
+                //                    })
+                //                    .listRowInsets(.init())
+                //                }
                 
                 BarcodeSearchResults(searchText: $searchText)
-                
             }
             .navigationTitle("Codes")
             .overlay {
@@ -123,20 +122,29 @@ struct CustomButton: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .tint(.accentColor)
                     Spacer()
                 }
                 Text(title)
                     .lineLimit(1)
                     .font(.headline)
-                    .tint(.accentColor)
             }
             .padding()
             
         })
+        
+        
+        .buttonStyle(.bordered)
+//        .buttonBorderShape(.roundedRectangle(radius: 10.0))
+        .tint(.accent)
+        
+//        .buttonStyle(.borderedProminent)
+//        .buttonBorderShape(.roundedRectangle(radius: 10.0))
+//        .foregroundStyle(.accent)
+//        .tint(Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground))
+        
         .frame(maxWidth: .infinity)
-        .background {
-            Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground).clipShape(RoundedRectangle(cornerRadius: 10.0))
-        }
+        //        .background {
+        //            Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground).clipShape(RoundedRectangle(cornerRadius: 10.0))
+        //        }
     }
 }
