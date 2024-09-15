@@ -12,7 +12,7 @@ import Vision
 class BarcodeAPI {
     
     static let supportedVNBarcodeSymbology: [VNBarcodeSymbology] = [.qr, .dataMatrix, .upce, .code39, .ean8, .ean13, .code93, .code128, .i2of5, .pdf417, .aztec]
-    static let symbologyWithText: [Symbology] = [.ean13]
+    static let symbologyWithText: [Symbology] = [.upce, .ean8, .ean13]
     
     enum Symbology: String {
         case qr, datamatrix, upca, code39, upce, ean8, ean13, code93, code128, interleaved2of5, pdf417, azteccode
