@@ -35,7 +35,7 @@ struct BarcodeSearchResults: View {
                 ForEach(favoriteItems) { item in
                     NavigationLink {
                         SwiftUIView(item: item)
-//                        EditBarcodeView(item: item, namespace: )
+                        //                        EditBarcodeView(item: item, namespace: )
                         //                            BarcodeView(barcode: item)
                     } label: {
                         BarcodeListItem(barcode: item, showFavoriteMarker: false)
@@ -50,7 +50,7 @@ struct BarcodeSearchResults: View {
                 ForEach(nonFavoriteItems) { item in
                     NavigationLink {
                         SwiftUIView(item: item)
-//                        EditBarcodeView(item: item)
+                        //                        EditBarcodeView(item: item)
                         //                            BarcodeView(barcode: item)
                     } label: {
                         BarcodeListItem(barcode: item)

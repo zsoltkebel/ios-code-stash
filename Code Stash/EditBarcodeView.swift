@@ -136,8 +136,10 @@ struct EditBarcodeView: View {
     }
     
     private func deleteBarcode() {
-        modelContext.delete(item)
-        dismiss()
+        withAnimation {
+            modelContext.delete(item)
+            dismiss()
+        }
     }
 }
 

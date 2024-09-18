@@ -11,6 +11,7 @@ import Vision
 struct AddBarcodeView: View {
     
     @Bindable var item: Item = Item()
+    var completion: ((Item) -> Void)?
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
@@ -48,8 +49,9 @@ struct AddBarcodeView: View {
         item.barcodeImageData = nil // to make sure written in palyload is loaded (can save item without submitting textfield)
         withAnimation {
             modelContext.insert(item)
+            dismiss()
+            self.completion?(item)
         }
-        dismiss()
     }
     
     private func clearImageData() {

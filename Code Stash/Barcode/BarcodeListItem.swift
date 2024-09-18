@@ -27,6 +27,9 @@ struct BarcodeListItem: View {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundStyle(.tertiary)
             }
+            barcode.type.image
+//                .imageScale(.large)
+                .foregroundStyle(.tertiary)
         }
         .contextMenu {
             Button(barcode.favorite ? "Remove Favorite" : "Mark as Favorite", systemImage: barcode.favorite ? "star.fill" : "star") {
@@ -48,5 +51,6 @@ struct BarcodeListItem: View {
         BarcodeListItem(barcode: .Barcode())
         BarcodeListItem(barcode: .StudentID())
         BarcodeListItem(barcode: .Unknown())
+        BarcodeListItem(barcode: .WIFI())
     }
 }

@@ -13,7 +13,8 @@ struct SwiftUIView: View {
     @Environment(\.dismiss) var dismiss
 
     @Bindable var item: Item
-    
+    var onDelete: (() -> Void)?
+
     @Namespace var barcodeView
     
     @State var editMode = EditMode.inactive
@@ -75,7 +76,7 @@ struct SwiftUIView: View {
     private func deleteBarcode() {
         withAnimation {
             modelContext.delete(item)
-            dismiss()
+            onDelete?()
         }
     }
 }

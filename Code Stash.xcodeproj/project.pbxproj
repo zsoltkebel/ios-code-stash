@@ -25,6 +25,7 @@
 		AF4A15312C931E1D00FD9456 /* BarcodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15302C931E1D00FD9456 /* BarcodeAPI.swift */; };
 		AF56D8F72C9AD925001FE40B /* BrightnessToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF56D8F62C9AD925001FE40B /* BrightnessToggle.swift */; };
 		AF56D8FA2C9AD964001FE40B /* CustomEditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF56D8F92C9AD964001FE40B /* CustomEditButton.swift */; };
+		AF6FB6062C9B26B3007C4010 /* CodeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6FB6052C9B26B3007C4010 /* CodeDetails.swift */; };
 		AFA6D6462C934F6100BA5B22 /* BarcodeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */; };
 		AFAA097D2C974B33004892E4 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAA097C2C974B33004892E4 /* BarcodeView.swift */; };
 		AFAA097F2C974DC6004892E4 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAA097E2C974DC6004892E4 /* SwiftUIView.swift */; };
@@ -51,6 +52,7 @@
 		AF56D8F42C9A5DFD001FE40B /* Code Stash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Code Stash.entitlements"; sourceTree = "<group>"; };
 		AF56D8F62C9AD925001FE40B /* BrightnessToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessToggle.swift; sourceTree = "<group>"; };
 		AF56D8F92C9AD964001FE40B /* CustomEditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEditButton.swift; sourceTree = "<group>"; };
+		AF6FB6052C9B26B3007C4010 /* CodeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeDetails.swift; sourceTree = "<group>"; };
 		AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeImage.swift; sourceTree = "<group>"; };
 		AFAA097C2C974B33004892E4 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
 		AFAA097E2C974DC6004892E4 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				AF015F242C947CE90056AC68 /* Localizable.xcstrings */,
 				AF4A150C2C91A5B600FD9456 /* Code_StashApp.swift */,
 				AF4A150E2C91A5B600FD9456 /* ContentView.swift */,
+				AF6FB6052C9B26B3007C4010 /* CodeDetails.swift */,
 				AF4A15102C91A5B600FD9456 /* Item.swift */,
 				AF4A15122C91A5B800FD9456 /* Assets.xcassets */,
 				AF4A15142C91A5B800FD9456 /* Preview Content */,
@@ -235,6 +238,7 @@
 				AF4A15112C91A5B600FD9456 /* Item.swift in Sources */,
 				AF56D8F72C9AD925001FE40B /* BrightnessToggle.swift in Sources */,
 				AF4A150D2C91A5B600FD9456 /* Code_StashApp.swift in Sources */,
+				AF6FB6062C9B26B3007C4010 /* CodeDetails.swift in Sources */,
 				AF015F2B2C948E660056AC68 /* BarcodeList.swift in Sources */,
 				AF56D8FA2C9AD964001FE40B /* CustomEditButton.swift in Sources */,
 				AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */,

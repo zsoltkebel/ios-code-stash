@@ -305,6 +305,9 @@
         }
       }
     },
+    "hello" : {
+
+    },
     "Hello, World!" : {
 
     },
@@ -514,6 +517,7 @@
       }
     },
     "Select an item" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en-GB" : {
           "stringUnit" : {
@@ -522,6 +526,9 @@
           }
         }
       }
+    },
+    "Select an item." : {
+
     },
     "Start by scanning a code or entering code details manually." : {
       "localizations" : {

@@ -138,6 +138,27 @@ extension Item {
         }
         return nil
     }
+    
+    var type: CodeType {
+        if self.wifi != nil { return .wifi }
+        if self.payloadStringValue.hasPrefix("https:") { return .url }
+        if self.vnSymbology == .qr { return .qr }
+        return .barcode
+    }
+}
+
+enum CodeType {
+    case qr, barcode, wifi, url
+    
+    var image: Image {
+        switch self {
+        case .qr: return Image(systemName: "qrcode")
+        case .barcode: return Image(systemName: "barcode")
+        case .wifi: return Image(systemName: "wifi")
+        case .url: return Image(systemName: "link")
+        default: return Image(systemName: "exclamationmark.triangle.fill")
+        }
+    }
 }
 
 import NetworkExtension

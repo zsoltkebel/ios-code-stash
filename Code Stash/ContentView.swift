@@ -10,6 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) var dismiss
     
     @Query(sort: \Item.timestamp, order: .reverse) private var items: [Item]
     
@@ -22,15 +23,20 @@ struct ContentView: View {
     
     @State private var editMode: EditMode = .inactive
     
+    @State private var selection: Item.ID?
+    
     @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
+    
     
     var body: some View {
         NavigationSplitView {
-            List {
+            List(selection: $selection) {
                 LazyVGrid(columns: [.init(.adaptive(minimum: 140))]) {
                     CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
+                        .disabled(editMode.isEditing)
                     
                     CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
+                        .disabled(editMode.isEditing)
                 }
                 .listRowInsets(.init())
                 .listRowBackground(Color.clear)
@@ -48,6 +54,7 @@ struct ContentView: View {
                 
                 BarcodeSearchResults(searchText: $searchText)
             }
+            .listStyle(.insetGrouped)
             .navigationTitle("Codes")
             .overlay {
                 if items.isEmpty {
@@ -74,12 +81,20 @@ struct ContentView: View {
                 }
             }
             .environment(\.editMode, $editMode)
-            .navigationDestination(for: Item.self) { item in
-                SwiftUIView(item: item)
-            }
             //            .toolbarTitleDisplayMode(.inline)
+//            .navigationDestination(for: Item.self) { item in
+//                SwiftUIView(item: item)
+//            }
         } detail: {
-            Text("Select an item")
+            if let selectedItem = items.first(where: { $0.id == selection }) {
+                SwiftUIView(item: selectedItem, onDelete: {
+                    withAnimation {
+                        selection = nil
+                    }
+                })
+            } else {
+                Text("Select an item.")
+            }
         }
         .sheet(isPresented: $scanning, content: {
             BarcodeViewfinderView()
@@ -87,7 +102,9 @@ struct ContentView: View {
         })
         .sheet(isPresented: $enteringCodeDetails) {
             NavigationStack {
-                AddBarcodeView(item: newItem)
+                AddBarcodeView(item: newItem, completion: { newItem in
+                    selection = newItem.id
+                })
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Cancel", action: {
