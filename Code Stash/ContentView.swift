@@ -20,6 +20,8 @@ struct ContentView: View {
     @State private var favoritesExpanded = true
     @State private var historyExpanded = true
     
+    @State private var editMode: EditMode = .inactive
+    
     @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
     
     var body: some View {
@@ -53,13 +55,28 @@ struct ContentView: View {
                 }
             }
             .toolbar {
-                if !items.isEmpty {
+                if editMode.isEditing {
                     ToolbarItem {
                         EditButton()
                     }
+                } else {
+                    ToolbarItem {
+                        Menu("More", systemImage: "ellipsis.circle") {
+                            if !items.isEmpty {
+                                CustomEditButton(editMode: $editMode)
+                            }
+                            
+                            Section {
+                                BrightnessToggle()
+                            }
+                        }
+                    }
                 }
             }
-            
+            .environment(\.editMode, $editMode)
+            .navigationDestination(for: Item.self) { item in
+                SwiftUIView(item: item)
+            }
             //            .toolbarTitleDisplayMode(.inline)
         } detail: {
             Text("Select an item")
@@ -134,13 +151,13 @@ struct CustomButton: View {
         
         
         .buttonStyle(.bordered)
-//        .buttonBorderShape(.roundedRectangle(radius: 10.0))
+        //        .buttonBorderShape(.roundedRectangle(radius: 10.0))
         .tint(.accent)
         
-//        .buttonStyle(.borderedProminent)
-//        .buttonBorderShape(.roundedRectangle(radius: 10.0))
-//        .foregroundStyle(.accent)
-//        .tint(Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground))
+        //        .buttonStyle(.borderedProminent)
+        //        .buttonBorderShape(.roundedRectangle(radius: 10.0))
+        //        .foregroundStyle(.accent)
+        //        .tint(Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground))
         
         .frame(maxWidth: .infinity)
         //        .background {

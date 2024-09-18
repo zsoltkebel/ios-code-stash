@@ -9,15 +9,17 @@ import SwiftUI
 
 struct SwiftUIView: View {
 //    @Environment(\.editMode) private var editMode
-    
+    @Environment(\.modelContext) var modelContext
+    @Environment(\.dismiss) var dismiss
+
     @Bindable var item: Item
     
     @Namespace var barcodeView
     
     @State var editMode = EditMode.inactive
+    @State var showingDeleteAlert = false
     
     var body: some View {
-//        let isEditing = editMode?.wrappedValue.isEditing ?? false
         let isEditing = editMode.isEditing
         Group {
             if isEditing == true {
@@ -49,6 +51,12 @@ struct SwiftUIView: View {
                                 editMode = .active
                             }
                         }
+                        
+                        Section {
+                            Button("Delete", systemImage: "trash", role: .destructive) {
+                                showingDeleteAlert.toggle()
+                            }
+                        }
                     }
                 }
             }
@@ -58,12 +66,22 @@ struct SwiftUIView: View {
         .onDisappear {
             editMode = .inactive
         }
+        .alert("Delete \"\(item.name)\"?", isPresented: $showingDeleteAlert) {
+            Button("No", role: .cancel) {}
+            Button("Yes", role: .destructive, action: deleteBarcode)
+        }
+    }
+    
+    private func deleteBarcode() {
+        withAnimation {
+            modelContext.delete(item)
+            dismiss()
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        EditButton()
         SwiftUIView(item: .Barcode())
     }
 }

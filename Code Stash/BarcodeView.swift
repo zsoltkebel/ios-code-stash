@@ -13,7 +13,7 @@ struct BarcodeView: View {
     let item: Item
     
     @Environment(\.colorScheme) var colorScheme
-    
+
     @State var linkReachable: Bool = false
     @State var wifiConfigured: Bool = false
     
@@ -89,6 +89,7 @@ struct BarcodeView: View {
                 }
             }
         }
+        .autoIncreaseBrightness()
     }
 }
 
