@@ -24,6 +24,7 @@
       }
     },
     "Add Code" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en-GB" : {
           "stringUnit" : {
@@ -134,6 +135,7 @@
       }
     },
     "Code Type & Content" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en-GB" : {
           "stringUnit" : {
@@ -176,6 +178,9 @@
           }
         }
       }
+    },
+    "Connect to Wi-Fi" : {
+
     },
     "Content" : {
       "localizations" : {
@@ -250,6 +255,9 @@
         }
       }
     },
+    "Edit" : {
+
+    },
     "Enter Details" : {
       "localizations" : {
         "en-GB" : {
@@ -319,6 +327,9 @@
         }
       }
     },
+    "Mark as Favorite" : {
+
+    },
     "More" : {
       "localizations" : {
         "en-GB" : {
@@ -356,6 +367,9 @@
           }
         }
       }
+    },
+    "New Code" : {
+
     },
     "No" : {
       "localizations" : {
@@ -401,6 +415,9 @@
         }
       }
     },
+    "Open Link" : {
+
+    },
     "Please provide access to the camera in settings" : {
       "localizations" : {
         "en-GB" : {
@@ -424,6 +441,9 @@
       }
     },
     "Reload Image" : {
+
+    },
+    "Remove Favorite" : {
 
     },
     "Requesting camera access" : {

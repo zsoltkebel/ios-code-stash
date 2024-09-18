@@ -10,28 +10,29 @@ import Vision
 
 struct AddBarcodeView: View {
     
-    enum FocusedField {
-        case name, payload
-    }
-    
     @Bindable var item: Item = Item()
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @FocusState private var focusedField: FocusedField?
-
+    @FocusState private var focusedField: BarcodeField?
+    
     var body: some View {
         Form {
-            TextField("Name", text: $item.name)
-                .focused($focusedField, equals: .name)
-
-            CodeTypeAndContentInputSection(item: item, sectionExpanded: true)
+            HStack {
+                Spacer()
+                BarcodeImage(item: item)
+                    .frame(maxHeight: 120)
+                Spacer()
+            }
+            .listRowInsets(.init())
+            .listRowBackground(Color.clear)
             
-            BarcodeImage(item: item)
-                .frame(maxWidth: .infinity)
+            Section {
+                BarcodeNameTypeContentInput(item: item, focusedField: _focusedField)
+            }
         }
-        .navigationTitle("Add Code")
+        .navigationTitle("New Code")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
             ToolbarItem(placement: .confirmationAction) {
@@ -58,7 +59,7 @@ struct AddBarcodeView: View {
 
 #Preview {
     NavigationStack {
-        AddBarcodeView(item: Item())
+        AddBarcodeView(item: .StudentID())
             .modelContainer(for: Item.self, inMemory: true)
     }
 }

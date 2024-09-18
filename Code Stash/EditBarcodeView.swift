@@ -8,30 +8,65 @@
 import SwiftUI
 import Vision
 
+enum BarcodeField {
+    case name, symbology, payload
+}
+
 struct EditBarcodeView: View {
     @Bindable var item: Item
     
-    @State var sectionExpanded: Bool = false
+    @State var sectionExpanded: Bool = true
     @State private var previousBrightness: Double?
     @State private var showingDeleteConfirmAlert = false
+    @State private var imageNeedsReloading = false
+    
+    let namespace: Namespace.ID
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     @AppStorage("auto_increase_brightness") var auto_increase_brigthness = false
     @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
     
+    @Namespace var pageAnimation
+    @Namespace var codeView
+    
     var body: some View {
         let screen = UIScreen.main
-        List {
-            BarcodeImage(item: item)
-                .frame(maxWidth: .infinity)
-                .listRowBackground(Color.white)
+        
+        Form {
+            Section {
+                HStack {
+                    Spacer()
+                    BarcodeImage(item: item)
+                        .matchedGeometryEffect(id: "codeView", in: namespace)
+                    //                    .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 120)
+                    Spacer()
+                }
+                .listRowInsets(.init())
+                .listRowBackground(Color.clear)
+            }
             
-            CodeTypeAndContentInputSection(item: item)
+//            Section {
+                BarcodeNameTypeContentInput(item: item)
+//                    .onChange(of: item.payloadStringValue) { _, _ in
+////                        imageNeedsReloading = true
+//                        item.barcodeImageData = nil
+//                    }
+//            }
+            
+            Section {
+                Button(role: .destructive, action: {
+                    showingDeleteConfirmAlert = true
+                }, label: {
+                    Text("Delete")
+                })
+                .frame(maxWidth: .infinity)
+            }
         }
-        .listStyle(.sidebar)
-        .navigationTitle($item.name)
+//        .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: auto_increase_brigthness, { oldValue, newValue in
             if newValue {
@@ -54,43 +89,50 @@ struct EditBarcodeView: View {
                let brightness = previousBrightness {
                 screen.brightness = brightness
             }
-        })
-        .toolbar {
-            //            UserDefaultSettings()
-            ToolbarItem {
-                Button(action: { item.favorite.toggle() },
-                       label: {
-                    Image(systemName: item.favorite ? "star.fill" : "star")
-                })
-            }
             
-            ToolbarItem {
-                Menu("More", systemImage: "ellipsis.circle") {
-                    Toggle("Auto Increase Brightness", systemImage: auto_increase_brigthness ? "sun.max.fill" : "sun.min", isOn: $auto_increase_brigthness)
-                    
-                    Button("Reload Image", systemImage: "icloud.and.arrow.down") {
-                        item.barcodeImageData = nil
-                    }
-                    .disabled(item.barcodeImageData == nil)
-                    
-                    Section {
-                        Button("Delete", systemImage: "trash", role: .destructive) {
-                            showingDeleteConfirmAlert = true
-                        }
-                    }
-                }
-            }
-        }
+//            if imageNeedsReloading {
+//                clearImageData()
+//            }
+        })
+        //        .toolbar {
+        //
+        //            ToolbarItem {
+        //                Menu("More", systemImage: "ellipsis.circle") {
+        //                    Section {
+        //                        if let imageData = item.barcodeImageData,
+        //                           let uiImage = UIImage(data: imageData) {
+        //                            let image = Image(uiImage: uiImage)
+        //                            ShareLink(item: image, preview: SharePreview(item.name, image: image))
+        //                        }
+        //
+        //                        Button("Reload Image", systemImage: "icloud.and.arrow.down") {
+        //                            item.barcodeImageData = nil
+        //                        }
+        //                        .disabled(item.barcodeImageData == nil)
+        //                    }
+        //
+        //                    Toggle("Auto Increase Brightness", systemImage: auto_increase_brigthness ? "sun.max.fill" : "sun.min", isOn: $auto_increase_brigthness)
+        //
+        //                    Section {
+        //                        Button("Delete", systemImage: "trash", role: .destructive) {
+        //                            showingDeleteConfirmAlert = true
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        
         // Delete confirmation alert
         .alert("Delete \"\(item.name)\"?", isPresented: $showingDeleteConfirmAlert) {
             Button("No", role: .cancel) {}
-            Button("Yes", action: deleteBarcode)
+            Button("Yes", role: .destructive, action: deleteBarcode)
         }
     }
     
     private func clearImageData() {
         print("Clear image data")
         item.barcodeImageData = nil
+        imageNeedsReloading = false
     }
     
     private func deleteBarcode() {
@@ -100,8 +142,9 @@ struct EditBarcodeView: View {
 }
 
 #Preview {
-    NavigationStack {
-        EditBarcodeView(item: .QR())
+    @Namespace var smtg
+    return NavigationStack {
+        EditBarcodeView(item: .StudentID(), namespace: smtg)
             .modelContainer(for: Item.self, inMemory: true)
     }
 }
@@ -184,29 +227,23 @@ struct UserDefaultSettings: View {
     }
 }
 
-struct CodeTypeAndContentInputSection: View {
+struct BarcodeNameTypeContentInput: View {
     @Bindable var item: Item
-    
-    @State var sectionExpanded = false
+    @FocusState var focusedField: BarcodeField?
     
     var body: some View {
-        Section("Code Type & Content", isExpanded: $sectionExpanded) {
-            Picker("Type", selection: $item.symbologyRawValue) {
-                ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
-                    Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
-                }
+        TextField("Name", text: $item.name)
+            .focused($focusedField, equals: .name)
+        
+        Picker("Type", selection: $item.symbologyRawValue) {
+            ForEach(VNBarcodeSymbology.allCases, id: \.self) { symbology in
+                Text(symbology.rawValue.replacing("VNBarcodeSymbology", with: "").toSentence()).tag(symbology.rawValue)
             }
-            .onChange(of: item.symbologyRawValue) { oldValue, newValue in
-                clearImageData()
-            }
-            
-            TextField("Content", text: $item.payloadStringValue)
-                .onSubmit(clearImageData)
         }
-    }
-    
-    private func clearImageData() {
-        print("Clear image data")
-        item.barcodeImageData = nil
+        .focused($focusedField, equals: .symbology)
+        
+        TextField("Content", text: $item.payloadStringValue, axis: .vertical)
+            .focused($focusedField, equals: .payload)
+            .lineLimit(.max)
     }
 }

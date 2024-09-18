@@ -91,9 +91,9 @@ struct BarcodeViewfinderView: View {
         .onChange(of: vm.scanType) { _ in vm.recognizedItems = [] }
         .onChange(of: vm.textContentType) { _ in vm.recognizedItems = [] }
         .onChange(of: vm.recognizesMultipleItems) { _ in vm.recognizedItems = []}
-        .sheet(isPresented: $showSheet) {
-            EditBarcodeView(item: .Barcode())
-        }
+//        .sheet(isPresented: $showSheet) {
+//            EditBarcodeView(item: .Barcode(), namespace: <#Namespace.ID#>)
+//        }
         .onAppear(perform: {
             // reset recognized items
 //            vm.recognizedItems = []

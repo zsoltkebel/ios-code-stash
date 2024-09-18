@@ -80,7 +80,7 @@ class BarcodeAPI {
         return URL(string: urlString)
     }
     
-    static func supports(symbology: VNBarcodeSymbology) -> Bool {
+    static func supports(_ symbology: VNBarcodeSymbology) -> Bool {
         return supportedVNBarcodeSymbology.contains(symbology)
     }
 }

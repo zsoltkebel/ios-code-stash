@@ -24,6 +24,8 @@
 		AF4A152F2C92DDF200FD9456 /* AddBarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */; };
 		AF4A15312C931E1D00FD9456 /* BarcodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4A15302C931E1D00FD9456 /* BarcodeAPI.swift */; };
 		AFA6D6462C934F6100BA5B22 /* BarcodeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */; };
+		AFAA097D2C974B33004892E4 /* BarcodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAA097C2C974B33004892E4 /* BarcodeView.swift */; };
+		AFAA097F2C974DC6004892E4 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAA097E2C974DC6004892E4 /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +46,10 @@
 		AF4A152A2C91EEBE00FD9456 /* BarcodeViewfinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewfinderView.swift; sourceTree = "<group>"; };
 		AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBarcodeView.swift; sourceTree = "<group>"; };
 		AF4A15302C931E1D00FD9456 /* BarcodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeAPI.swift; sourceTree = "<group>"; };
+		AF56D8F42C9A5DFD001FE40B /* Code Stash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Code Stash.entitlements"; sourceTree = "<group>"; };
 		AFA6D6452C934F6100BA5B22 /* BarcodeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeImage.swift; sourceTree = "<group>"; };
+		AFAA097C2C974B33004892E4 /* BarcodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeView.swift; sourceTree = "<group>"; };
+		AFAA097E2C974DC6004892E4 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +103,7 @@
 		AF4A150B2C91A5B600FD9456 /* Code Stash */ = {
 			isa = PBXGroup;
 			children = (
+				AF56D8F42C9A5DFD001FE40B /* Code Stash.entitlements */,
 				AF015F242C947CE90056AC68 /* Localizable.xcstrings */,
 				AF4A150C2C91A5B600FD9456 /* Code_StashApp.swift */,
 				AF4A150E2C91A5B600FD9456 /* ContentView.swift */,
@@ -105,6 +111,8 @@
 				AF4A15122C91A5B800FD9456 /* Assets.xcassets */,
 				AF4A15142C91A5B800FD9456 /* Preview Content */,
 				AF4A15242C91B7E000FD9456 /* EditBarcodeView.swift */,
+				AFAA097C2C974B33004892E4 /* BarcodeView.swift */,
+				AFAA097E2C974DC6004892E4 /* SwiftUIView.swift */,
 				AF4A152E2C92DDF200FD9456 /* AddBarcodeView.swift */,
 				AF015F272C948AD40056AC68 /* Barcode */,
 				AFA6D6472C936EB400BA5B22 /* Barcode Generation */,
@@ -206,6 +214,7 @@
 			files = (
 				AF4A150F2C91A5B600FD9456 /* ContentView.swift in Sources */,
 				AF4A15272C91EDFB00FD9456 /* ScannerView.swift in Sources */,
+				AFAA097F2C974DC6004892E4 /* SwiftUIView.swift in Sources */,
 				AF4A15292C91EE8100FD9456 /* AppViewModel.swift in Sources */,
 				AF4A15212C91A86D00FD9456 /* BarcodeGenerator.swift in Sources */,
 				AF4A152B2C91EEBE00FD9456 /* BarcodeViewfinderView.swift in Sources */,
@@ -215,6 +224,7 @@
 				AF4A15252C91B7E000FD9456 /* EditBarcodeView.swift in Sources */,
 				AF4A151F2C91A77600FD9456 /* BarcodeListItem.swift in Sources */,
 				AF4A152F2C92DDF200FD9456 /* AddBarcodeView.swift in Sources */,
+				AFAA097D2C974B33004892E4 /* BarcodeView.swift in Sources */,
 				AFA6D6462C934F6100BA5B22 /* BarcodeImage.swift in Sources */,
 				AF4A15312C931E1D00FD9456 /* BarcodeAPI.swift in Sources */,
 				AF015F292C948AF40056AC68 /* BarcodeSearchResults.swift in Sources */,
@@ -348,6 +358,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Code Stash/Code Stash.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Code Stash/Preview Content\"";
@@ -355,6 +366,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcodes";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app needs access to be able to save QR and barcode images to photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -378,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Code Stash/Code Stash.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Code Stash/Preview Content\"";
@@ -385,6 +398,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcodes";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "The app needs access to be able to save QR and barcode images to photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

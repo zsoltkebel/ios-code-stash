@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import Vision
+import SwiftUI
 
 @Model
 final class Item {
@@ -40,9 +41,14 @@ final class Item {
         self.symbologyRawValue = symbologyRawValue
     }
     
+    func clearImageData() {
+        self.barcodeImageData = nil
+    }
+
     static func QR() -> Item {
         let item = Item(timestamp: Date())
         item.symbologyRawValue = VNBarcodeSymbology.qr.rawValue
+        item.payloadStringValue = "520923523"
         return item
     }
     
@@ -57,6 +63,27 @@ final class Item {
         let item = Item()
         item.symbologyRawValue = VNBarcodeSymbology.code39.rawValue
         item.payloadStringValue = "13587936"
+        return item
+    }
+    
+    static func Unknown() -> Item {
+        let item = Item()
+        item.symbologyRawValue = VNBarcodeSymbology.code39Checksum.rawValue
+        item.payloadStringValue = "520923523"
+        return item
+    }
+    
+    static func QRURL() -> Item {
+        let item = Item()
+        item.symbologyRawValue = VNBarcodeSymbology.qr.rawValue
+        item.payloadStringValue = "https://google.com"
+        return item
+    }
+    
+    static func WIFI() -> Item {
+        let item = Item()
+        item.symbologyRawValue = VNBarcodeSymbology.qr.rawValue
+        item.payloadStringValue = "WIFI:S:some wifi name;T:WPA;P:and a password;H:false;;"
         return item
     }
     
@@ -81,5 +108,59 @@ final class Item {
             print("Invalid data")
         }
         return nil
+    }
+}
+
+extension Item {
+    
+    var vnSymbology: VNBarcodeSymbology {
+        VNBarcodeSymbology(rawValue: self.symbologyRawValue)
+    }
+    
+    var image: Image? {
+        if let imageData = self.barcodeImageData,
+           let uiImage = UIImage(data: imageData) {
+            return Image(uiImage: uiImage)
+        }
+        return nil
+    }
+    
+    var url: URL? {
+        return URL(string: self.payloadStringValue)
+    }
+    
+    var wifi: Wifi? {
+        let regex = /^WIFI:S:(.*?);T:(WEP|WPA|);P:(.*?)(?:;H:(true|false))?;;$/
+        if let result = try? regex.wholeMatch(in: self.payloadStringValue) {
+            print("SSID: \(result.1)")
+            print("PASSWORD: \(result.3)")
+            return Wifi(ssid: String(result.1), t: String(result.2), password: String(result.3))
+        }
+        return nil
+    }
+}
+
+import NetworkExtension
+
+struct Wifi {
+    var ssid: String
+    var t: String
+    var password: String
+    
+    func isConfigured() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            NEHotspotConfigurationManager.shared.getConfiguredSSIDs { ssids in
+                continuation.resume(returning: ssids.contains(self.ssid))
+            }
+        }
+    }
+    
+    func connect() {
+        print("Trying to connect to wifi: \(self)")
+        let config = NEHotspotConfiguration(ssidPrefix: self.ssid, passphrase: self.password, isWEP: t == "WEP")
+        
+        NEHotspotConfigurationManager.shared.apply(config) { error in
+            print("error: \(error)")
+        }
     }
 }

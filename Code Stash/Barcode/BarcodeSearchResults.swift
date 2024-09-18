@@ -34,7 +34,8 @@ struct BarcodeSearchResults: View {
             Section("Favorites", isExpanded: $favoritesExpanded) {
                 ForEach(favoriteItems) { item in
                     NavigationLink {
-                        EditBarcodeView(item: item)
+                        SwiftUIView(item: item)
+//                        EditBarcodeView(item: item, namespace: )
                         //                            BarcodeView(barcode: item)
                     } label: {
                         BarcodeListItem(barcode: item, showFavoriteMarker: false)
@@ -48,7 +49,8 @@ struct BarcodeSearchResults: View {
             Section("History", isExpanded: $historyExpanded) {
                 ForEach(nonFavoriteItems) { item in
                     NavigationLink {
-                        EditBarcodeView(item: item)
+                        SwiftUIView(item: item)
+//                        EditBarcodeView(item: item)
                         //                            BarcodeView(barcode: item)
                     } label: {
                         BarcodeListItem(barcode: item)
