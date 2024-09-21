@@ -10,7 +10,7 @@ import SwiftData
 
 struct BarcodeSearchResults: View {
     @Binding var searchText: String
-    @Query private var items: [Item]
+    @Query private var items: [Barcode]
     
     @State private var favoritesExpanded = true
     @State private var historyExpanded = true
@@ -31,7 +31,7 @@ struct BarcodeSearchResults: View {
     
     var body: some View {
         if !favoriteItems.isEmpty {
-            Section("Favorites", isExpanded: $favoritesExpanded) {
+            Section(isExpanded: $favoritesExpanded) {
                 ForEach(favoriteItems) { item in
                     NavigationLink {
                         SwiftUIView(item: item)
@@ -42,11 +42,17 @@ struct BarcodeSearchResults: View {
                     }
                 }
                 .onDelete(perform: deleteFavoriteItems)
+            } header: {
+                Text("Favorites")
+                    .font(.headline)
+                    .foregroundStyle(Color(UIColor.label))
+                    .textCase(nil)
+                    .listRowInsets(.init(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
             }
         }
         
         if !nonFavoriteItems.isEmpty {
-            Section("History", isExpanded: $historyExpanded) {
+            Section(isExpanded: $historyExpanded) {
                 ForEach(nonFavoriteItems) { item in
                     NavigationLink {
                         SwiftUIView(item: item)
@@ -57,15 +63,21 @@ struct BarcodeSearchResults: View {
                     }
                 }
                 .onDelete(perform: deleteNonFavoriteItems)
+            } header: {
+                Text("History")
+                    .font(.headline)
+                    .foregroundStyle(Color(UIColor.label))
+                    .textCase(nil)
+                    .listRowInsets(.init(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
             }
         }
     }
     
-    var favoriteItems: [Item] {
+    var favoriteItems: [Barcode] {
         return items.filter({ $0.favorite })
     }
     
-    var nonFavoriteItems: [Item] {
+    var nonFavoriteItems: [Barcode] {
         return items.filter({ !$0.favorite })
     }
     

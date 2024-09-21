@@ -13,7 +13,7 @@ enum BarcodeField {
 }
 
 struct EditBarcodeView: View {
-    @Bindable var item: Item
+    @Bindable var item: Barcode
     
     @State var sectionExpanded: Bool = true
     @State private var previousBrightness: Double?
@@ -144,40 +144,11 @@ struct EditBarcodeView: View {
 }
 
 #Preview {
-    @Namespace var smtg
+    @Previewable @Namespace var smtg
     return NavigationStack {
-        EditBarcodeView(item: .StudentID(), namespace: smtg)
-            .modelContainer(for: Item.self, inMemory: true)
+        EditBarcodeView(item: .code39, namespace: smtg)
+            .modelContainer(for: Barcode.self, inMemory: true)
     }
-}
-
-extension VNBarcodeSymbology {
-    static let allCases: [VNBarcodeSymbology] = [
-        .aztec,
-        .codabar,
-        .code128,
-        .code39,
-        .code39Checksum,
-        .code39FullASCII,
-        .code39FullASCIIChecksum,
-        .code93,
-        .code93i,
-        .dataMatrix,
-        .ean13,
-        .ean8,
-        .gs1DataBar,
-        .gs1DataBarExpanded,
-        .gs1DataBarLimited,
-        .i2of5,
-        .i2of5Checksum,
-        .itf14,
-        .microPDF417,
-        .microQR,
-        .msiPlessey,
-        .pdf417,
-        .qr,
-        .upce
-    ]
 }
 
 extension String {
@@ -230,7 +201,7 @@ struct UserDefaultSettings: View {
 }
 
 struct BarcodeNameTypeContentInput: View {
-    @Bindable var item: Item
+    @Bindable var item: Barcode
     @FocusState var focusedField: BarcodeField?
     
     var body: some View {

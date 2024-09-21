@@ -10,8 +10,8 @@ import Vision
 
 struct AddBarcodeView: View {
     
-    @Bindable var item: Item = Item()
-    var completion: ((Item) -> Void)?
+    @Bindable var item: Barcode = Barcode()
+    var completion: ((Barcode) -> Void)?
     
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
@@ -61,7 +61,7 @@ struct AddBarcodeView: View {
 
 #Preview {
     NavigationStack {
-        AddBarcodeView(item: .StudentID())
-            .modelContainer(for: Item.self, inMemory: true)
+        AddBarcodeView(item: .code39)
+            .modelContainer(for: Barcode.self, inMemory: true)
     }
 }

@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 struct BarcodeView: View {
     let namespace: Namespace.ID
-    let item: Item
+    let item: Barcode
     
     @Environment(\.colorScheme) var colorScheme
 
@@ -39,7 +39,7 @@ struct BarcodeView: View {
                         .disabled(item.barcodeImageData == nil)
                     }
                 }))
-                .frame(maxHeight: 250)
+                .frame(maxWidth: 400, maxHeight: 250)
             Spacer()
             
             HStack {
@@ -94,10 +94,10 @@ struct BarcodeView: View {
 }
 
 #Preview {
-    @Namespace var sample
+    @Previewable @Namespace var sample
     
     return NavigationStack {
-        BarcodeView(namespace: sample, item: .QR())
+        BarcodeView(namespace: sample, item: .qr)
     }
 }
 

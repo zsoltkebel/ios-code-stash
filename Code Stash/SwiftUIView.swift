@@ -12,7 +12,7 @@ struct SwiftUIView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
 
-    @Bindable var item: Item
+    @Bindable var item: Barcode
     var onDelete: (() -> Void)?
 
     @Namespace var barcodeView
@@ -29,8 +29,8 @@ struct SwiftUIView: View {
                 BarcodeView(namespace: barcodeView, item: item)
             }
         }
-        .navigationTitle(isEditing ? "Edit Code" : item.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(isEditing ? "Edit Code" : title)
+//        .navigationBarTitleDisplayMode(.inline)
 //        .navigationBarBackButtonHidden(isEditing)
         .toolbar {
             ToolbarItem {
@@ -73,6 +73,10 @@ struct SwiftUIView: View {
         }
     }
     
+    var title: String {
+        item.name.isEmpty ? "Unnamed Code" : item.name
+    }
+    
     private func deleteBarcode() {
         withAnimation {
             modelContext.delete(item)
@@ -83,6 +87,6 @@ struct SwiftUIView: View {
 
 #Preview {
     NavigationStack {
-        SwiftUIView(item: .Barcode())
+        SwiftUIView(item: .code128)
     }
 }

@@ -23,7 +23,7 @@ struct BarcodeGenerator {
         return supportedSymbology.contains(symbology)
     }
     
-    static func imageData(for item: Item) -> Data? {
+    static func imageData(for item: Barcode) -> Data? {
         guard let data = item.payloadStringValue.data(using: String.Encoding.utf8) else {
             print("Can't parse payload data")
             return nil

@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@" : {
+
+    },
     "Add" : {
       "localizations" : {
         "en-GB" : {
@@ -69,7 +72,14 @@
       }
     },
     "Automatically Increase Brightness" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatically Increase Brightness"
+          }
+        }
+      }
     },
     "Barcode" : {
       "localizations" : {
@@ -183,7 +193,14 @@
       }
     },
     "Connect to Wi-Fi" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect to Wi-Fi"
+          }
+        }
+      }
     },
     "Content" : {
       "localizations" : {
@@ -208,7 +225,24 @@
       }
     },
     "Copy Content" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Content"
+          }
+        }
+      }
+    },
+    "Create" : {
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create"
+          }
+        }
+      }
     },
     "Default Code Type" : {
       "localizations" : {
@@ -259,9 +293,17 @@
       }
     },
     "Edit" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "Enter Details" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en-GB" : {
           "stringUnit" : {
@@ -305,9 +347,6 @@
         }
       }
     },
-    "hello" : {
-
-    },
     "Hello, World!" : {
 
     },
@@ -334,7 +373,14 @@
       }
     },
     "Mark as Favorite" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark as Favourite"
+          }
+        }
+      }
     },
     "More" : {
       "localizations" : {
@@ -375,7 +421,14 @@
       }
     },
     "New Code" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Code"
+          }
+        }
+      }
     },
     "No" : {
       "localizations" : {
@@ -422,7 +475,14 @@
       }
     },
     "Open Link" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Link"
+          }
+        }
+      }
     },
     "Please provide access to the camera in settings" : {
       "localizations" : {
@@ -447,7 +507,14 @@
       }
     },
     "Reload Image" : {
-
+      "localizations" : {
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reload Image"
+          }
+        }
+      }
     },
     "Remove Favorite" : {
 
@@ -515,6 +582,15 @@
           }
         }
       }
+    },
+    "Search" : {
+
+    },
+    "Search %@ codes" : {
+
+    },
+    "Search favorites" : {
+
     },
     "Select an item" : {
       "extractionState" : "stale",

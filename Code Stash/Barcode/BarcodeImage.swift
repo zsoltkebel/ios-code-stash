@@ -17,7 +17,7 @@ import Vision
 ///
 /// Image download tasks are cancelled if unfinished when underlying data changes.
 struct BarcodeImage: View {
-    @Bindable var item: Item
+    @Bindable var item: Barcode
     
     @State private var imageDownloadTask: Task<Void, Never>?
     
@@ -80,10 +80,10 @@ struct BarcodeImage: View {
 #Preview {
     ScrollView {
         VStack {
-            BarcodeImage(item: .Barcode())
-            BarcodeImage(item: .QR())
-            BarcodeImage(item: .StudentID())
-            BarcodeImage(item: .Unknown())
+            BarcodeImage(item: .code128)
+            BarcodeImage(item: .qr)
+            BarcodeImage(item: .code39)
+            BarcodeImage(item: .code39Checksum)
         }
     }
     .background {

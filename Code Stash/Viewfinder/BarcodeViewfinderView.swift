@@ -114,7 +114,7 @@ struct BarcodeViewfinderView: View {
             fatalError("This should not be recognised")
         case .barcode(let barcode):
             withAnimation {
-                let newItem = Item(payloadStringValue: barcode.payloadStringValue ?? "", symbologyRawValue: barcode.observation.symbology.rawValue)
+                let newItem = Barcode(payloadStringValue: barcode.payloadStringValue ?? "", symbologyRawValue: barcode.observation.symbology.rawValue)
                 modelContext.insert(newItem)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {

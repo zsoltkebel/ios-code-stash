@@ -39,9 +39,9 @@ struct AutoIncreaseBrightness: ViewModifier {
                     UIScreen.main.brightness = previousBrightness
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: UIScreen.brightnessDidChangeNotification)) { _ in
-                previousBrightness = UIScreen.main.brightness
-            }
+//            .onReceive(NotificationCenter.default.publisher(for: UIScreen.brightnessDidChangeNotification)) { _ in
+//                previousBrightness = UIScreen.main.brightness
+//            }
     }
 }
 

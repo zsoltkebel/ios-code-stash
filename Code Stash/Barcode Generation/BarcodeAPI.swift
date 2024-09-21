@@ -22,7 +22,7 @@ class BarcodeAPI {
         case svg, png, jpg, tiff
     }
     
-    static func load(barcode item: Item) async -> Data? {
+    static func load(barcode item: Barcode) async -> Data? {
         guard let url = url(for: item) else {
             print("Invalid URL")
             return nil
@@ -63,7 +63,7 @@ class BarcodeAPI {
         return nil
     }
     
-    static func url(for item: Item) -> URL? {
+    static func url(for item: Barcode) -> URL? {
         guard let type: Symbology = VNBarcodeSymbology(rawValue: item.symbologyRawValue).toBarcodeAPISymbology() else {
             // unsupported symbology
             return nil
@@ -82,37 +82,5 @@ class BarcodeAPI {
     
     static func supports(_ symbology: VNBarcodeSymbology) -> Bool {
         return supportedVNBarcodeSymbology.contains(symbology)
-    }
-}
-
-extension VNBarcodeSymbology {
-    
-    func toBarcodeAPISymbology() -> BarcodeAPI.Symbology? {
-        switch self {
-        case .qr:
-            return .qr
-        case .dataMatrix:
-            return .datamatrix
-        case .code39:
-            return .code39
-        case .upce:
-            return .upce
-        case .ean8:
-            return .ean8
-        case .ean13:
-            return .ean13
-        case .code93:
-            return .code93
-        case .code128:
-            return .code128
-        case .i2of5:
-            return .interleaved2of5
-        case .pdf417:
-            return .pdf417
-        case .aztec:
-            return .azteccode
-        default:
-            return nil
-        }
     }
 }

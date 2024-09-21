@@ -7,52 +7,47 @@
 
 import SwiftUI
 import SwiftData
+import Vision
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
+    @State var isSearching: Bool = false
     
-    @Query(sort: \Item.timestamp, order: .reverse) private var items: [Item]
+    @Query(sort: \Barcode.timestamp, order: .reverse) private var items: [Barcode]
     
     @State private var scanning = false
     @State private var enteringCodeDetails = false
     @State private var searchText = ""
-    @State private var newItem = Item()
+    @State private var newItem = Barcode()
     @State private var favoritesExpanded = true
     @State private var historyExpanded = true
     
     @State private var editMode: EditMode = .inactive
     
-    @State private var selection: Item.ID?
+    @State private var selection: Barcode.ID?
     
     @AppStorage("default_symbology") var default_symbology: String = "VNBarcodeSymbologyQR"
     
+    @AppStorage("active_filter") var activeFilter: CodeFilter = .all
     
     var body: some View {
         NavigationSplitView {
             List(selection: $selection) {
-                LazyVGrid(columns: [.init(.adaptive(minimum: 140))]) {
-                    CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
-                        .disabled(editMode.isEditing)
-                    
-                    CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
-                        .disabled(editMode.isEditing)
+                Section {
+                    NewCodeButtons(selection: $selection)
+                        .padding(.top, 20.0)
+                } header: {
+                    Filters(activeFilter: $activeFilter)
+                        .textCase(nil)
+                        .clipShape(RoundedRectangle(cornerRadius: 10.0))
                 }
                 .listRowInsets(.init())
                 .listRowBackground(Color.clear)
+                .listSectionSpacing(20.0)
                 
-                //                Section {
-                //                    EmptyView()
-                //                } footer: {
-                //                    LazyVGrid(columns: columnGrid, spacing: 16, content: {
-                //                        CustomButton(title: "Scan", systemName: "qrcode.viewfinder", action: scanItem)
-                //
-                //                        CustomButton(title: "Enter Details", systemName: "rectangle.and.pencil.and.ellipsis", action: addItem)
-                //                    })
-                //                    .listRowInsets(.init())
-                //                }
-                
-                BarcodeSearchResults(searchText: $searchText)
+                //                BarcodeSearchResults(searchText: $searchText)
+                CodeSearchResults(searchText: $searchText, filter: $activeFilter)
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Codes")
@@ -82,9 +77,9 @@ struct ContentView: View {
             }
             .environment(\.editMode, $editMode)
             //            .toolbarTitleDisplayMode(.inline)
-//            .navigationDestination(for: Item.self) { item in
-//                SwiftUIView(item: item)
-//            }
+            //            .navigationDestination(for: Item.self) { item in
+            //                SwiftUIView(item: item)
+            //            }
         } detail: {
             if let selectedItem = items.first(where: { $0.id == selection }) {
                 SwiftUIView(item: selectedItem, onDelete: {
@@ -105,19 +100,19 @@ struct ContentView: View {
                 AddBarcodeView(item: newItem, completion: { newItem in
                     selection = newItem.id
                 })
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel", action: {
-                                enteringCodeDetails = false
-                            })
-                        }
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel", action: {
+                            enteringCodeDetails = false
+                        })
                     }
+                }
             }
         }
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic))
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .automatic), prompt: searchPrompt)
     }
     
-    var searchResults: [Item] {
+    var searchResults: [Barcode] {
         if searchText.isEmpty {
             return items
         } else {
@@ -130,55 +125,26 @@ struct ContentView: View {
     }
     
     private func addItem() {
-        newItem = Item()
+        newItem = Barcode()
         newItem.symbologyRawValue = default_symbology
         enteringCodeDetails = true
+    }
+    
+    var searchPrompt: LocalizedStringKey {
+        switch activeFilter {
+        case .all:
+            return "Search"
+        case .favorites:
+            return "Search favorites"
+        case .symbology(let vnSymbology):
+            return "Search \(vnSymbology.simpleName) codes"
+        case .content(let content):
+            return "Search \(content.rawValue.toSentence()) codes"
+        }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
-
-struct CustomButton: View {
-    var title: LocalizedStringKey
-    var systemName: String
-    var action: () -> Void
-    
-    @Environment(\.colorScheme) var colorScheme
-    
-    var body: some View {
-        Button(action: action, label: {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Image(systemName: systemName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 30, height: 30)
-                    Spacer()
-                }
-                Text(title)
-                    .lineLimit(1)
-                    .font(.headline)
-            }
-            .padding()
-            
-        })
-        
-        
-        .buttonStyle(.bordered)
-        //        .buttonBorderShape(.roundedRectangle(radius: 10.0))
-        .tint(.accent)
-        
-        //        .buttonStyle(.borderedProminent)
-        //        .buttonBorderShape(.roundedRectangle(radius: 10.0))
-        //        .foregroundStyle(.accent)
-        //        .tint(Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground))
-        
-        .frame(maxWidth: .infinity)
-        //        .background {
-        //            Color(colorScheme == .dark ? UIColor.secondarySystemBackground : UIColor.systemBackground).clipShape(RoundedRectangle(cornerRadius: 10.0))
-        //        }
-    }
+        .modelContainer(for: Barcode.self, inMemory: true)
 }
